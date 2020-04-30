@@ -49,15 +49,15 @@ spec:
       - name: {{ .Values.image.pullSecrets }}
       {{- end }}
       initContainers:
-            - name: wait-for-db
-              image: busybox:1.28
-              command:
-              - 'sh'
-              - '-c'
-              - >
-                until nc -z -w 2 {{ .Release.Name }}-postgresql {{ .Values.postgresql.servicePort }} && echo postgresql ok;
-                  do sleep 2;
-                done
+        - name: wait-for-db
+          image: busybox:1.28
+          command:
+            - 'sh'
+            - '-c'
+            - >
+              until nc -z -w 2 {{ .Release.Name }}-postgresql {{ .Values.postgresql.servicePort }} && echo postgresql ok;
+              do sleep 2;
+              done
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.image.repository }}:{{ .Values.imagetag }}
